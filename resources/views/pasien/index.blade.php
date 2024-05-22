@@ -8,8 +8,11 @@
                 <div class="row">
                     <div class="col-lg-7 text-center mx-auto">
                         <h1 class="text-white pt-3 mt-n5">Selamat Datang</h1>
-                        <p class="lead text-white mt-3">Aplikasi ini membantu mendeteksi tanda awal depresi pada remaja.
+                        <p class="lead text-white mt-3">Website ini membantu mendeteksi tanda awal depresi pada remaja.
                             Konsultasikan dengan profesional untuk info lebih lanjut. </p>
+                        <div class="buttons">
+                            <a href="" class="btn btn-white mt-4">Lakukan Tes <i class="material-icons text-3xl">arrow_forward</i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,7 +29,6 @@
                             <div class="front front-background"
                                 style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80); background-size: cover;">
                                 <div class="card-body py-7 text-center">
-                                    <i class="material-icons text-white text-4xl my-3">touch_app</i>
                                     <h3 class="text-white">Kenali Gejala <br />Depresi</h3>
                                     <p class="text-white opacity-8">Gejala depresi pada remaja bisa bervariasi. Berikut beberapa gejala yang perlu diperhatikan:</p>
                                 </div>
@@ -37,14 +39,14 @@
                     <div class="row justify-content-start">
                         <div class="col-md-6">
                             <div class="info">
-                                <i class="material-icons text-gradient text-primary text-3xl">content_copy</i>
+                                <i class="material-icons text-gradient text-primary text-3xl">sentiment_dissatisfied</i>
                                 <h5 class="font-weight-bolder mt-3">Perasaan Sedih</h5>
                                 <p class="pe-5">Perasaan sedih atau cemas yang berlangsung lama</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="info">
-                                <i class="material-icons text-gradient text-primary text-3xl">flip_to_front</i>
+                                <i class="material-icons text-gradient text-primary text-3xl">mood_bad</i>
                                 <h5 class="font-weight-bolder mt-3">Kehilangan Minat</h5>
                                 <p class="pe-3">Kehilangan minat pada aktivitas yang disukai</p>
                             </div>
@@ -52,13 +54,13 @@
                     </div>
                     <div class="row justify-content-start mt-5">
                         <div class="col-md-6 mt-3">
-                            <i class="material-icons text-gradient text-primary text-3xl">price_change</i>
+                            <i class="material-icons text-gradient text-primary text-3xl">emoji_people</i>
                             <h5 class="font-weight-bolder mt-3">Perubahan pada tubuh</h5>
                             <p class="pe-5">Perubahan berat badan atau nafsu makan</p>
                         </div>
                         <div class="col-md-6 mt-3">
                             <div class="info">
-                                <i class="material-icons text-gradient text-primary text-3xl">devices</i>
+                                <i class="material-icons text-gradient text-primary text-3xl">hotel</i>
                                 <h5 class="font-weight-bolder mt-3">Kesulitan tidur</h5>
                                 <p class="pe-3">Kesulitan tidur atau tidur berlebihan</p>
                             </div>

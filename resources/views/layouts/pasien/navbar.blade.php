@@ -366,11 +366,23 @@
               </div>
             </ul>
           </li>
-          <li class="nav-item ms-lg-auto">
-            <a class="nav-link nav-link-icon me-2" href="{{ route('login') }}">
-              <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Star us on Github">Login</p>
-            </a>
-          </li>
+          @if (auth()->check())
+            <li class="nav-item ms-lg-auto">
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-default nav-link nav-link-icon" style="
+                  margin-bottom: 0px;">
+                  <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-placement="bottom">Logout</p>
+                </button>
+              </form>
+            </li>
+          @else
+            <li class="nav-item ms-lg-auto">
+              <a class="nav-link nav-link-icon me-2" href="{{ route('login') }}">
+                <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-placement="bottom">Login</p>
+              </a>
+            </li>
+          @endif
         </ul>
       </div>
     </div>
