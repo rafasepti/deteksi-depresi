@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pasien.index');
+})->name('index');
+
+Route::middleware('auth', 'checkRole:admin')->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.index');
+    })->name('index.admin');
 });
 
 Route::get('/dashboard', function () {
