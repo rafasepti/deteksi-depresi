@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class HasilDiagnosa extends Model
 {
     use HasFactory;
+    protected $table = "hasil_daignosa";
+    protected $guarded = ['created_at', 'updated_at'];
 }
