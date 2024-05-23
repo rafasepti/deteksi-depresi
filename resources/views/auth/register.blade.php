@@ -104,28 +104,28 @@
                     @csrf
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Name</label>
-                      <input type="text" class="form-control" id="name" name="name" :value="old('name')" required autofocus autocomplete="name">
-                      <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                      <input type="text" class="form-control" id="name" name="name" :value="old('name')" required autofocus autocomplete="name"> 
                     </div>
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
                       <input type="email" class="form-control" id="email" name="email" :value="old('email')" required autocomplete="username">
-                      <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
                       <input type="password" class="form-control" id="password" 
                         name="password"
                         required autocomplete="new-password">
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="password_confirmation" 
                           name="password_confirmation"
                           required autocomplete="new-password">
-                          <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                      </div>
+                    </div>
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     <div class="text-center">
                       <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
                     </div>
