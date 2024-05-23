@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,6 +12,8 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
     })->name('index.admin');
+
+    Route::get('/data-admin', [UserController::class, 'index'])->name('admin.data-admin');
 });
 
 Route::get('/dashboard', function () {

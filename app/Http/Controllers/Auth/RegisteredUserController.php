@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pasien;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -41,10 +42,25 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $newUserId = $user->id;
+
+        $pasien = Pasien::create([
+            'user_id' => $newUserId,
+            'nama_pasien' => $request->name,
+            // Tambahkan atribut lainnya sesuai kebutuhan
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $hak_akses = auth()->user()->hak_akses;
+
+        if ($hak_akses === 'admin') {
+            return redirect(route('index.admin', absolute: false));
+            
+        } else {
+            return redirect(route('index', absolute: false));
+        }
     }
 }
