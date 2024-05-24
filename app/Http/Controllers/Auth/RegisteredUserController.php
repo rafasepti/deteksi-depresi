@@ -34,6 +34,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'alamat' => 'required',
+            'no_telp' => 'required',
         ]);
 
         $user = User::create([
@@ -47,7 +49,8 @@ class RegisteredUserController extends Controller
         $pasien = Pasien::create([
             'user_id' => $newUserId,
             'nama_pasien' => $request->name,
-            // Tambahkan atribut lainnya sesuai kebutuhan
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
         ]);
 
         event(new Registered($user));

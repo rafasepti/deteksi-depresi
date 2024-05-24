@@ -111,6 +111,14 @@
                       <label class="form-label">Email</label>
                       <input type="email" class="form-control" id="email" name="email" :value="old('email')" required autocomplete="username">
                     </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Alamat</label>
+                      <input type="text" class="form-control" id="alamat" name="alamat" :value="old('alamat')" required autocomplete="alamat"> 
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">No. Telp</label>
+                      <input type="tel" class="form-control" id="no_telp" name="no_telp" :value="old('no_telp')" required autocomplete="no_telp"> 
+                    </div>
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
