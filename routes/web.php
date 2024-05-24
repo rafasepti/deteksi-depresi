@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GejalaController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +21,14 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/data-admin/edit/{id}', [AdminController::class, 'edit'])->name('admin.data-admin.edit');
     Route::post('/data-admin/update', [AdminController::class, 'update'])->name('admin.data-admin.update');
     Route::get('/data-admin/hapus/{id}', [AdminController::class, 'destroy']);
+
+    Route::get('/gejala', [GejalaController::class, 'index'])->name('admin.gejala');
+    Route::get('/gejala/list', [GejalaController::class, 'dataTable'])->name('admin.gejala.list');
+    Route::get('/gejala/tambah', [GejalaController::class, 'create'])->name('admin.gejala.create');
+    Route::post('/gejala/store', [GejalaController::class, 'store'])->name('admin.gejala.store');
+    Route::get('/gejala/edit/{id}', [GejalaController::class, 'edit'])->name('admin.gejala.edit');
+    Route::post('/gejala/update', [GejalaController::class, 'update'])->name('admin.gejala.update');
+    Route::get('/gejala/hapus/{id}', [GejalaController::class, 'destroy']);
 });
 
 Route::get('/dashboard', function () {
