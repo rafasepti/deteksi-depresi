@@ -37,7 +37,10 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  
+  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet">
   @vite(['resources/js/app.js'])
+  @yield('style');
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -62,6 +65,15 @@
   <script src="{{ asset('assets/admin') }}/assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="{{ asset('assets/admin') }}/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="{{ asset('assets/admin') }}/assets/js/plugins/chartjs.min.js"></script>
+
+    <!-- Github buttons -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+    <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async defer src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ asset('assets/admin') }}/assets/js/material-dashboard.min.js?v=3.1.0"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -72,10 +84,6 @@
     }
   </script>
   @yield('script')
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{{ asset('assets/admin') }}/assets/js/material-dashboard.min.js?v=3.1.0"></script>
 </body>
 
 </html>
