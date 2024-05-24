@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepresiController;
 use App\Http\Controllers\GejalaController;
+use App\Http\Controllers\PertanyaanDiagnosaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,14 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/gangguan/edit/{id}', [DepresiController::class, 'edit'])->name('admin.depresi.edit');
     Route::post('/gangguan/update', [DepresiController::class, 'update'])->name('admin.depresi.update');
     Route::get('/gangguan/hapus/{id}', [DepresiController::class, 'destroy']);
+
+    Route::get('/pertanyaan', [PertanyaanDiagnosaController::class, 'index'])->name('admin.pertanyaan');
+    Route::get('/pertanyaan/list', [PertanyaanDiagnosaController::class, 'dataTable'])->name('admin.pertanyaan.list');
+    Route::get('/pertanyaan/tambah', [PertanyaanDiagnosaController::class, 'create'])->name('admin.pertanyaan.create');
+    Route::post('/pertanyaan/store', [PertanyaanDiagnosaController::class, 'store'])->name('admin.pertanyaan.store');
+    Route::get('/pertanyaan/edit/{id}', [PertanyaanDiagnosaController::class, 'edit'])->name('admin.pertanyaan.edit');
+    Route::post('/pertanyaan/update', [PertanyaanDiagnosaController::class, 'update'])->name('admin.pertanyaan.update');
+    Route::get('/pertanyaan/hapus/{id}', [PertanyaanDiagnosaController::class, 'destroy']);
 });
 
 Route::get('/dashboard', function () {

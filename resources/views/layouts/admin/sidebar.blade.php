@@ -47,6 +47,14 @@
             <span class="nav-link-text ms-1">Gangguan</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-white {{ $currentRoute == 'admin.pertanyaan' ? 'active bg-gradient-primary' : '' }}" href="{{ route('admin.pertanyaan') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">question_mark</i>
+            </div>
+            <span class="nav-link-text ms-1">Pertanyaan Diagnosa</span>
+          </a>
+        </li>
       </ul>
     </div>
   </aside>
