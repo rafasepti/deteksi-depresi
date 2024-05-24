@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DepresiController;
 use App\Http\Controllers\GejalaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,14 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/gejala/edit/{id}', [GejalaController::class, 'edit'])->name('admin.gejala.edit');
     Route::post('/gejala/update', [GejalaController::class, 'update'])->name('admin.gejala.update');
     Route::get('/gejala/hapus/{id}', [GejalaController::class, 'destroy']);
+
+    Route::get('/gangguan', [DepresiController::class, 'index'])->name('admin.depresi');
+    Route::get('/gangguan/list', [DepresiController::class, 'dataTable'])->name('admin.depresi.list');
+    Route::get('/gangguan/tambah', [DepresiController::class, 'create'])->name('admin.depresi.create');
+    Route::post('/gangguan/store', [DepresiController::class, 'store'])->name('admin.depresi.store');
+    Route::get('/gangguan/edit/{id}', [DepresiController::class, 'edit'])->name('admin.depresi.edit');
+    Route::post('/gangguan/update', [DepresiController::class, 'update'])->name('admin.depresi.update');
+    Route::get('/gangguan/hapus/{id}', [DepresiController::class, 'destroy']);
 });
 
 Route::get('/dashboard', function () {
