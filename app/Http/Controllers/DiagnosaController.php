@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosa;
 use App\Http\Requests\StoreDiagnosaRequest;
 use App\Http\Requests\UpdateDiagnosaRequest;
+use App\Models\Pasien;
+use App\Models\PertanyaanDiagnosa;
+use Illuminate\Support\Facades\Auth;
 
 class DiagnosaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index(){
+        $pasien = Pasien::with('user')
+            ->where('user_id', Auth::id())
+            ->first();
+        $pertanyaan = PertanyaanDiagnosa::all();
+        return view('pasien.diagnosa.tes_depresi', compact('pasien', 'pertanyaan'));
     }
 
     /**

@@ -11,7 +11,7 @@
                         <p class="lead text-white mt-3">Website ini membantu mendeteksi tanda awal depresi pada remaja.
                             Konsultasikan dengan profesional untuk info lebih lanjut. </p>
                         <div class="buttons">
-                            <a href="" class="btn btn-white mt-4">Lakukan Tes <i class="material-icons text-3xl">arrow_forward</i></a>
+                            <a href="{{ route('pasien.diagnosa') }}" class="btn btn-white mt-4">Lakukan Diagnosa <i class="material-icons text-3xl">arrow_forward</i></a>
                         </div>
                     </div>
                 </div>
