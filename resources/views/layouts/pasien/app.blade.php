@@ -32,6 +32,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('assets/pasien/assets') }}/css/material-kit.css?v=3.0.4" rel="stylesheet" />
+  @yield('style')
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -53,6 +54,12 @@
     @yield('content')
   </div>
   @include('layouts.pasien.footer')
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script async defer src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <!--   Core JS Files   -->
   <script src="{{ asset('assets/pasien/assets') }}/js/core/popper.min.js" type="text/javascript"></script>
   <script src="{{ asset('assets/pasien/assets') }}/js/core/bootstrap.min.js" type="text/javascript"></script>

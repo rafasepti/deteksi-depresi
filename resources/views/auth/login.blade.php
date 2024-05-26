@@ -91,13 +91,15 @@
                 <div class="input-group input-group-outline my-3">
                   <label class="form-label">Email</label>
                   <input type="email" class="form-control" id="email" name="email" :value="old('email')" required autofocus autocomplete="username">
-                  <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
                 <div class="input-group input-group-outline mb-3">
                   <label class="form-label">Password</label>
                   <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password">
-                  <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+
                 <div class="form-check form-switch d-flex align-items-center mb-3">
                   <input class="form-check-input" type="checkbox" id="rememberMe"  id="remember_me" name="remember_me">
                   <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>

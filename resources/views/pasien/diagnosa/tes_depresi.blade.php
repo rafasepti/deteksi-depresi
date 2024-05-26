@@ -1,4 +1,11 @@
 @extends('layouts.pasien.app')
+@section('style')
+    <style>
+        .pagination .page-item.active .page-link {
+            color: white;
+        }
+    </style>
+@endsection
 @section('header')
     <header class="bg-gradient-dark">
         <div class="page-header min-vh-75" style="background-image: url('{{ asset('assets/pasien/assets') }}/img/bg9.jpg');">
@@ -66,45 +73,89 @@
                     <h3 class="mt-5 mt-lg-0">Pertanyaan</h3>
                     <div class="table-responsive">
                         <table>
-                            @foreach ($pertanyaan as $item => $p)
-                                <tr>
-                                    <td>{{ $item+1 }}.</td>
-                                    <td>{{ $p->pertanyaan }}</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="pb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
-                                                <label class="custom-control-label" for="customRadio1">Tidak Tahu</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
-                                                <label class="custom-control-label" for="customRadio2">Tidak Yakin</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
-                                                <label class="custom-control-label" for="customRadio3">Mungkin</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
-                                                <label class="custom-control-label" for="customRadio4">Kemungkinan Besar</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
-                                                <label class="custom-control-label" for="customRadio5">Hampir Pasti</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
-                                                <label class="custom-control-label" for="customRadio5">Pasti</label>
-                                            </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <form action="" method="POST" id="diagnosisForm">
+                                @foreach ($pertanyaan as $index => $p)
+                                    <tr>
+                                        <td>{{ $index + $pertanyaan->firstItem() }}.</td>
+                                        <td>{{ $p->pertanyaan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="pb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio1_{{ $p->id }}" >
+                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak Tahu</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio2_{{ $p->id }}">
+                                                    <label class="custom-control-label" for="customRadio2_{{ $p->id }}">Tidak Yakin</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio3_{{ $p->id }}">
+                                                    <label class="custom-control-label" for="customRadio3_{{ $p->id }}">Mungkin</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio4_{{ $p->id }}">
+                                                    <label class="custom-control-label" for="customRadio4_{{ $p->id }}">Kemungkinan Besar</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio5_{{ $p->id }}">
+                                                    <label class="custom-control-label" for="customRadio5_{{ $p->id }}">Hampir Pasti</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio6_{{ $p->id }}">
+                                                    <label class="custom-control-label" for="customRadio6_{{ $p->id }}">Pasti</label>
+                                                </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </form>
                         </table>
+                        <div class="mt-4">
+                            {{ $pertanyaan->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+<script>
+    function validateForm() {
+        const form = document.getElementById('diagnosisForm');
+        const questions = form.querySelectorAll('.form-check-input');
+        const questionGroups = {};
+
+        questions.forEach((input) => {
+            const name = input.name;
+            if (!questionGroups[name]) {
+                questionGroups[name] = [];
+            }
+            questionGroups[name].push(input);
+        });
+
+        let isValid = true;
+
+        for (const name in questionGroups) {
+            const isAnswered = questionGroups[name].some((input) => input.checked);
+            if (!isAnswered) {
+                isValid = false;
+                alert(`Please answer all questions before submitting.`);
+                break;
+            }
+        }
+
+        return isValid;
+    }
+
+    window.onload = function() {
+        const form = document.getElementById('diagnosisForm');
+        form.onsubmit = function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        };
+    };
+</script>
 @endsection

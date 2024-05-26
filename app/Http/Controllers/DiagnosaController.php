@@ -18,7 +18,7 @@ class DiagnosaController extends Controller
         $pasien = Pasien::with('user')
             ->where('user_id', Auth::id())
             ->first();
-        $pertanyaan = PertanyaanDiagnosa::all();
+        $pertanyaan = PertanyaanDiagnosa::orderBy('id', 'asc')->paginate(8);
         return view('pasien.diagnosa.tes_depresi', compact('pasien', 'pertanyaan'));
     }
 
