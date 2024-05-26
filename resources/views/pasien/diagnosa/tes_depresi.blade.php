@@ -71,8 +71,8 @@
                 </div>
                 <div class="col-lg-7 mt-lg-0 mt-5 px-3">
                     <h3 class="mt-5 mt-lg-0">Pertanyaan</h3>
-                    <table>
-                        <form action="" method="POST" id="diagnosisForm">
+                    <form action="" method="POST" id="diagnosisForm">
+                        <table>
                             @foreach ($pertanyaan as $index => $p)
                                 <tr>
                                     <td>{{ $index + $pertanyaan->firstItem() }}.</td>
@@ -132,8 +132,11 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        </form>
-                    </table>
+                        </table>
+                        @if ($pertanyaan->currentPage() == $pertanyaan->lastPage())
+                            <button type="submit" class="btn bg-gradient-primary mt-3">Submit</button>
+                        @endif
+                    </form>
                     <div class="mt-4">
                         {{ $pertanyaan->links() }}
                     </div>
