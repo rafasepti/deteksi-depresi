@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosa;
 use App\Http\Requests\StoreDiagnosaRequest;
 use App\Http\Requests\UpdateDiagnosaRequest;
+use App\Models\Gejala;
 use App\Models\Pasien;
 use App\Models\PertanyaanDiagnosa;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class DiagnosaController extends Controller
         $pasien = Pasien::with('user')
             ->where('user_id', Auth::id())
             ->first();
-        $pertanyaan = PertanyaanDiagnosa::orderBy('id', 'asc')->paginate(8);
+        $pertanyaan = Gejala::orderBy('id', 'asc')->paginate(8);
         return view('pasien.diagnosa.tes_depresi', compact('pasien', 'pertanyaan'));
     }
 
