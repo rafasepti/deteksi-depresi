@@ -38,6 +38,8 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/gangguan/list', [DepresiController::class, 'dataTable'])->name('admin.depresi.list');
     Route::get('/gangguan/tambah', [DepresiController::class, 'create'])->name('admin.depresi.create');
     Route::post('/gangguan/store', [DepresiController::class, 'store'])->name('admin.depresi.store');
+    Route::get('/gangguan/gejala/{id}', [DepresiController::class, 'gejala'])->name('admin.depresi.gejala');
+    Route::post('/gangguan/gejalaStore', [DepresiController::class, 'Gejalastore'])->name('admin.depresi.gejala-store');
     Route::get('/gangguan/edit/{id}', [DepresiController::class, 'edit'])->name('admin.depresi.edit');
     Route::post('/gangguan/update', [DepresiController::class, 'update'])->name('admin.depresi.update');
     Route::get('/gangguan/hapus/{id}', [DepresiController::class, 'destroy']);

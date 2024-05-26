@@ -3,9 +3,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Depresi</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Gangguan</li>
         </ol>
-        <h6 class="font-weight-bolder mb-0">Data Depresi</h6>
+        <h6 class="font-weight-bolder mb-0">Data Gangguan</h6>
     </nav>
 @endsection
 @section('content')
@@ -28,7 +28,7 @@
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
               <div class="d-flex justify-content-between align-items-center ps-3 pe-3">
-                  <h6 class="text-white text-capitalize">Tabel Depresi</h6>
+                  <h6 class="text-white text-capitalize">Tabel Gangguan</h6>
                   <a href="{{ route('admin.depresi.create') }}" class="btn btn-light">Tambah</a>
               </div>
           </div>

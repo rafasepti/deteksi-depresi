@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Depresi;
 use App\Http\Requests\StoreDepresiRequest;
 use App\Http\Requests\UpdateDepresiRequest;
+use App\Models\Gejala;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,6 +24,9 @@ class DepresiController extends Controller
                 ->addColumn('action', function($data){
                     $actionBtn = 
                     '
+                        <a href="/gangguan/gejala/'.$data->id.'" class="btn btn-primary btn-sm">
+                            Gejala
+                        </a>
                         <a href="/gangguan/edit/'.$data->id.'" class="btn btn-info btn-sm">
                             Edit
                         </a>
@@ -50,6 +54,31 @@ class DepresiController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
+    {
+        $request->validate([
+            'kode_depresi' => ['required', 'string', 'max:100'],
+            'tingkat_depresi' => ['required'],
+        ]);
+
+        depresi::create([
+            'kode_depresi' => $request->kode_depresi,
+            'tingkat_depresi' => $request->tingkat_depresi,
+        ]);
+
+        return Redirect::route('admin.depresi')->with('success', 'Data berhasil ditambahkan!');
+    }
+
+    public function gejala($id)
+    {
+        $depresi = Depresi::where('id', $id)->first();
+        $gejala = Gejala::all();
+        return view('admin.depresi.gejala', compact('depresi', 'gejala'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function gejalaStore(Request $request)
     {
         $request->validate([
             'kode_depresi' => ['required', 'string', 'max:100'],
