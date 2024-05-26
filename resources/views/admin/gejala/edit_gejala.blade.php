@@ -42,6 +42,10 @@
               <label>Nama Gejala</label>
               <input type="text" class="form-control" required name="nama_gejala" id="nama_gejala" value="{{ $gejala->nama_gejala }}">
             </div>
+                <div class="input-group input-group-outline my-3 is-filled">
+                  <label class="form-label">Pertanyaan</label>
+                  <textarea class="form-control" rows="5" placeholder="masukan pertanyaan diagnosa" spellcheck="false" name="pertanyaan" id="pertanyaan">{{ $gejala->pertanyaan }}</textarea>
+                </div>
             <button type="submit" class="btn bg-gradient-primary mt-3">Submit</button>
         </form>
         </div>

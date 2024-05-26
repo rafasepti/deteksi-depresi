@@ -54,11 +54,13 @@ class GejalaController extends Controller
         $request->validate([
             'kode_gejala' => ['required', 'string', 'max:100'],
             'nama_gejala' => ['required'],
+            'pertanyaan' => ['required'],
         ]);
 
         Gejala::create([
             'nama_gejala' => $request->nama_gejala,
             'kode_gejala' => $request->kode_gejala,
+            'pertanyaan' => $request->pertanyaan,
         ]);
 
         return Redirect::route('admin.gejala')->with('success', 'Data berhasil ditambahkan!');
@@ -90,11 +92,13 @@ class GejalaController extends Controller
         $request->validate([
             'kode_gejala' => ['required', 'string', 'max:100'],
             'nama_gejala' => ['required'],
+            'pertanyaan' => ['required'],
         ]);
 
         Gejala::where('id', $request->id)->update([
             'nama_gejala' => $request->nama_gejala,
             'kode_gejala' => $request->kode_gejala,
+            'pertanyaan' => $request->pertanyaan,
         ]);
 
         return Redirect::route('admin.gejala')->with('success', 'Data berhasil diedit!');
