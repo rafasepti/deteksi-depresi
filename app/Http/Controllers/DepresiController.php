@@ -6,6 +6,8 @@ use App\Models\Depresi;
 use App\Http\Requests\StoreDepresiRequest;
 use App\Http\Requests\UpdateDepresiRequest;
 use App\Models\Gejala;
+use App\Models\GejalaDepresi;
+use App\Models\GejalaGangguan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
@@ -70,9 +72,11 @@ class DepresiController extends Controller
 
     public function gejala($id)
     {
-        $depresi = Depresi::where('id', $id)->first();
+        // Ambil data tingkat depresi
+        $depresi = Depresi::findOrFail($id);
+        $gejalaDepresi = GejalaDepresi::where('depresi_id', $id)->pluck('gejala_id')->toArray();
         $gejala = Gejala::all();
-        return view('admin.depresi.gejala', compact('depresi', 'gejala'));
+        return view('admin.depresi.gejala', compact('depresi', 'gejala', 'gejalaDepresi'));
     }
 
     /**
@@ -80,17 +84,40 @@ class DepresiController extends Controller
      */
     public function gejalaStore(Request $request)
     {
+        // Validasi request
         $request->validate([
-            'kode_depresi' => ['required', 'string', 'max:100'],
-            'tingkat_depresi' => ['required'],
+            'gejala_id' => 'required|array',
+            'depresi_id' => 'required|exists:depresi,id',
         ]);
 
-        depresi::create([
-            'kode_depresi' => $request->kode_depresi,
-            'tingkat_depresi' => $request->tingkat_depresi,
-        ]);
+        // Ambil depresi_id dari request
+        $depresi_id = $request->input('depresi_id');
 
-        return Redirect::route('admin.depresi')->with('success', 'Data berhasil ditambahkan!');
+        // Ambil gejala_id yang dipilih dari request
+        $gejala_ids = $request->input('gejala_id');
+
+        // Hapus data gejala yang tidak dipilih lagi
+        GejalaDepresi::where('depresi_id', $depresi_id)
+            ->whereNotIn('gejala_id', $gejala_ids)
+            ->delete();
+
+        // Simpan atau tambahkan data yang dipilih
+        foreach ($gejala_ids as $gejala_id) {
+            // Cek apakah item sudah ada dalam database
+            $existingRecord = GejalaDepresi::where('depresi_id', $depresi_id)
+                ->where('gejala_id', $gejala_id)
+                ->first();
+
+            // Jika item belum ada, tambahkan ke database
+            if (!$existingRecord) {
+                $gejalaDepresi = new GejalaDepresi();
+                $gejalaDepresi->depresi_id = $depresi_id;
+                $gejalaDepresi->gejala_id = $gejala_id;
+                $gejalaDepresi->save();
+            }
+        }
+
+        return Redirect::route('admin.depresi')->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -126,7 +153,7 @@ class DepresiController extends Controller
             'tingkat_depresi' => $request->tingkat_depresi,
         ]);
 
-        return Redirect::route('admin.depresi')->with('success', 'Data berhasil diedit!');
+        return Redirect::route('admin.depresi')->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -135,6 +162,7 @@ class DepresiController extends Controller
     public function destroy($id)
     {
         depresi::where('id', $id)->delete();
+        GejalaDepresi::where('depresi_id', $id)->delete();
         
         return Redirect::route('admin.depresi')->with('success', 'Data berhasil dihapus!');
     }

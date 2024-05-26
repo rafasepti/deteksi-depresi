@@ -39,10 +39,14 @@
                     <input type="text" class="form-control" required name="tingkat_depresi" id="tingkat_depresi" readonly value="{{ $depresi->tingkat_depresi }}">
                 </div>
                 @foreach ($gejala as $g)
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="fcustomCheck_{{ $g->id }}" name="gejala_id" value="{{ $g->id }}">
-                    <label class="custom-control-label" for="customCheck_{{ $g->id }}">{{ $g->nama_gejala }}</label>
-                </div>
+                    <div class="form-check">
+                        @php
+                            // Periksa apakah gejala ini sudah terkait dengan tingkat depresi yang sedang diedit
+                            $checked = in_array($g->id, $gejalaDepresi) ? 'checked' : '';
+                        @endphp
+                        <input class="form-check-input" type="checkbox" id="fcustomCheck_{{ $g->id }}" name="gejala_id[]" value="{{ $g->id }}" {{ $checked }}>
+                        <label class="custom-control-label" for="customCheck_{{ $g->id }}">{{ $g->nama_gejala }}</label>
+                    </div>
                 @endforeach
                 <button type="submit" class="btn bg-gradient-primary mt-3">Submit</button>
             </form>
