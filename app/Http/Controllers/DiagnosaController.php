@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDiagnosaRequest;
 use App\Models\Gejala;
 use App\Models\Pasien;
 use App\Models\PertanyaanDiagnosa;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DiagnosaController extends Controller
@@ -21,6 +22,18 @@ class DiagnosaController extends Controller
             ->first();
         $pertanyaan = Gejala::orderBy('id', 'asc')->paginate(8);
         return view('pasien.diagnosa.tes_depresi', compact('pasien', 'pertanyaan'));
+    }
+
+    public function storeAnswers(Request $request)
+    {
+        $answers = $request->except('_token', 'page'); // Mendapatkan semua input form kecuali token CSRF dan halaman
+        $page = $request->input('page'); // Mendapatkan halaman saat ini atau halaman tujuan
+
+        foreach ($answers as $key => $value) {
+            session()->put($key, $value); // Menyimpan setiap jawaban ke dalam session
+        }
+
+        return redirect()->route('pasien.diagnosa', ['page' => $page]); // Redirect ke halaman yang sesuai
     }
 
     /**
