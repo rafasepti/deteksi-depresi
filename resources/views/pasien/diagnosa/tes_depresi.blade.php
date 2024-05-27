@@ -86,32 +86,32 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 @php
-                                                    $answer = session('jawaban' . $p->id);
+                                                    $answer = session('gejala_' . $index + $pertanyaan->firstItem());
                                                 @endphp
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio1_{{ $p->id }}" value="Tidak Tahu" {{ $answer == 'Tidak Tahu' ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak Tahu</label>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio1_{{ $p->id }}" value="0" {{ $answer == '0' ? 'checked' : '' }}>
+                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio2_{{ $p->id }}" value="Tidak Yakin" {{ $answer == 'Tidak Yakin' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio2_{{ $p->id }}" value="1" {{ $answer == '1' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="customRadio2_{{ $p->id }}">Tidak Yakin</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio3_{{ $p->id }}" value="Mungkin" {{ $answer == 'Mungkin' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio3_{{ $p->id }}" value="2" {{ $answer == '2' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="customRadio3_{{ $p->id }}">Mungkin</label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio4_{{ $p->id }}" value="Kemungkinan Besar" {{ $answer == 'Kemungkinan Besar' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio4_{{ $p->id }}" value="3" {{ $answer == '3' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="customRadio4_{{ $p->id }}">Kemungkinan Besar</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio5_{{ $p->id }}" value="Hampir Pasti" {{ $answer == 'Hampir Pasti' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio5_{{ $p->id }}" value="4" {{ $answer == '4' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="customRadio5_{{ $p->id }}">Hampir Pasti</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="jawaban{{ $p->id }}" id="customRadio6_{{ $p->id }}" value="Pasti" {{ $answer == 'Pasti' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio6_{{ $p->id }}" value="5" {{ $answer == '5' ? 'checked' : '' }}>
                                                     <label class="custom-control-label" for="customRadio6_{{ $p->id }}">Pasti</label>
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
                             @endforeach
                         </table>
                         @if ($pertanyaan->currentPage() == $pertanyaan->lastPage())
-                            <button type="submit" class="btn bg-gradient-primary mt-3">Submit</button>
+                            <button type="submit" name="btn_submit" class="btn bg-gradient-primary mt-3">Submit</button>
                         @endif
                     </form>
                     <div class="mt-4">

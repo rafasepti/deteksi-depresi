@@ -56,6 +56,7 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
 Route::middleware('auth', 'checkRole:pasien')->group(function () {
     Route::get('/diagnosa-depresi', [DiagnosaController::class, 'index'])->name('pasien.diagnosa');
     Route::post('/diagnosa-depresi', [DiagnosaController::class, 'storeAnswers'])->name('pasien.diagnosa.session');
+    Route::get('/hasil-diagnosa', [DiagnosaController::class, 'showResult'])->name('pasien.diagnosa.result');
 
 });
 

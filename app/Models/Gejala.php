@@ -27,4 +27,9 @@ class Gejala extends Model
 
         return $nextCode;
     }
+
+    public function depresi()
+    {
+        return $this->belongsToMany(Depresi::class, 'gejala_depresi', 'gejala_id', 'depresi_id')->withPivot('value');
+    }
 }
