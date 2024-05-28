@@ -52,6 +52,8 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     
     Route::get('/pasien', [PasienController::class, 'index'])->name('admin.pasien');
     Route::get('/pasien/list', [PasienController::class, 'dataTable'])->name('admin.pasien.list');
+    Route::get('/pasien/report/{bln}', [PasienController::class, 'report'])->name('admin.pasien.report');
+    Route::get('/pasien/detail/{id}', [PasienController::class, 'show'])->name('admin.pasien.show');
 });
 
 Route::middleware('auth', 'checkRole:pasien')->group(function () {

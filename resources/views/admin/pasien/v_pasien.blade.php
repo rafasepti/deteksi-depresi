@@ -29,7 +29,27 @@
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
               <div class="d-flex justify-content-between align-items-center ps-3 pe-3">
                   <h6 class="text-white text-capitalize">Tabel Pasien</h6>
-                  <a href="{{ route('admin.depresi.create') }}" class="btn btn-light">Print</a>
+                  <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      Print
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'tidak') }}">Semua</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'januari') }}">Januari</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'februari') }}">Februari</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'maret') }}">Maret</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'april') }}">April</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'mei') }}">Mei</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'juni') }}">Juni</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'juli') }}">Juli</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'agustus') }}">Agustus</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'september') }}">September</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'oktober') }}">Oktober</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'november') }}">November</a></li>
+                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'desember') }}">Desember</a></li>
+                    </ul>
+                  </div>
+                  {{-- <a href="{{ route('admin.pasien.report') }}" class="btn btn-light">Print</a> --}}
               </div>
           </div>
         </div>

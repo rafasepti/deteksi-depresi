@@ -40,51 +40,47 @@ class PasienController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function show()
     {
-        //
+        $hasil_diagnosa = HasilDiagnosa::with('depresi')
+                ->with('user')
+                ->first();
+        $pasien = Pasien::where('user_id', $hasil_diagnosa->user_id)->first();
+        return view('admin.pasien.detail', compact('hasil_diagnosa', 'pasien'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePasienRequest $request)
+    public function report($bln)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pasien $pasien)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pasien $pasien)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePasienRequest $request, Pasien $pasien)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pasien $pasien)
-    {
-        //
+        $bulan = [
+            'januari' => 1,
+            'februari' => 2,
+            'maret' => 3,
+            'april' => 4,
+            'mei' => 5,
+            'juni' => 6,
+            'juli' => 7,
+            'agustus' => 8,
+            'september' => 9,
+            'oktober' => 10,
+            'november' => 11,
+            'desember' => 12
+        ];
+    
+        // Dapatkan angka bulan dari nama bulan
+        $monthNumber = $bulan[strtolower($bln)] ?? null;
+    
+        if ($monthNumber) {
+            $hasil_diagnosa = HasilDiagnosa::with('depresi')
+                ->with('user')
+                ->whereMonth('updated_at', $monthNumber)
+                ->get();
+        } else {
+            // Jika nama bulan tidak valid, kembalikan hasil kosong atau semua data
+            $hasil_diagnosa = HasilDiagnosa::with('depresi')
+                ->with('user')
+                ->get();
+        }
+        return view('admin.pasien.report', compact('hasil_diagnosa'));
     }
 }
