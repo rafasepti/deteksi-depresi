@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Pasien;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +18,19 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $id = Auth::id();
+        if(auth()->user()->hak_akses == 'pasien'){
+            $user = User::where('id', $id)
+            ->with('pasien')
+            ->first();
+        }else{
+            $user = User::where('id', $id)
+            ->with('admin')
+            ->first();
+        }
+        //dd($user);
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
@@ -26,6 +39,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $pasien = Pasien::where('user_id', Auth::id())->update([
+            'nama_pasien' => $request->name,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
+        ]);
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
