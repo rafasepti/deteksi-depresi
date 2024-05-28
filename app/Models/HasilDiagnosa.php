@@ -15,4 +15,9 @@ class HasilDiagnosa extends Model
     {
         return $this->belongsTo(Depresi::class, 'depresi_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

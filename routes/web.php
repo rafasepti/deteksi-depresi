@@ -4,18 +4,17 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepresiController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\GejalaController;
-use App\Http\Controllers\HomePasienController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PertanyaanDiagnosaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomePasienController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'indexPasien'])->name('index');
 
 Route::middleware('auth', 'checkRole:admin')->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    })->name('index.admin');
+    Route::get('/admin', [HomeController::class, 'indexAdmin'])->name('index.admin');
 
     Route::get('/data-admin', [AdminController::class, 'index'])->name('admin.data-admin');
     Route::get('/data-admin/list', [AdminController::class, 'dataTable'])->name('admin.data-admin.list');
@@ -50,6 +49,9 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/pertanyaan/edit/{id}', [PertanyaanDiagnosaController::class, 'edit'])->name('admin.pertanyaan.edit');
     Route::post('/pertanyaan/update', [PertanyaanDiagnosaController::class, 'update'])->name('admin.pertanyaan.update');
     Route::get('/pertanyaan/hapus/{id}', [PertanyaanDiagnosaController::class, 'destroy']);
+    
+    Route::get('/pasien', [PasienController::class, 'index'])->name('admin.pasien');
+    Route::get('/pasien/list', [PasienController::class, 'dataTable'])->name('admin.pasien.list');
 });
 
 Route::middleware('auth', 'checkRole:pasien')->group(function () {
