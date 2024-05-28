@@ -9,6 +9,7 @@ use App\Models\HasilDiagnosa;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Phpml\Classification\KNearestNeighbors;
 use Phpml\Classification\NaiveBayes;
 
@@ -35,6 +36,43 @@ class DiagnosaController extends Controller
         }
 
         if ($request->has('btn_submit')) {
+            // Ambil semua data dari session
+            $answers = session()->all();
+
+            // Filter hanya jawaban gejala
+            $gejalaAnswers = array_filter($answers, function($key) {
+                return strpos($key, 'gejala_') === 0;
+            }, ARRAY_FILTER_USE_KEY);
+
+            // Cek apakah lebih dari 2/3 jawaban adalah 0
+            $totalGejala = count($gejalaAnswers);
+            $jumlahJawaban0 = count(array_filter($gejalaAnswers, function($value) {
+                return $value == 0;
+            }));
+
+            if ($totalGejala > 0 && $jumlahJawaban0 / $totalGejala > 2/3) {
+                $depresi = Depresi::where('tingkat_depresi', 'Tidak Depresi')->first();
+                $this->saveOrUpdateDiagnosa(Auth::id(), $depresi ? $depresi->id : '0');
+                session()->forget(array_keys($gejalaAnswers));
+                return redirect()->route('pasien.diagnosa.result')
+                                ->with(['depresiLevelNaiveBayes' => 'Tidak Depresi', 'depresiLevelKNN' => 'Tidak Depresi']);
+            }
+
+            // Convert answers to sample format
+            $sample = $this->prepareSample($gejalaAnswers);
+
+            // Hitung tingkat depresi
+            $depresiLevels = $this->calculateDepresi($sample);
+            $depresiLevelNaiveBayes = $depresiLevels['depresiLevelNaiveBayes'];
+            $depresiLevelKNN = $depresiLevels['depresiLevelKNN'];
+
+            // Simpan atau update hasil diagnosa
+            $this->saveOrUpdateDiagnosa(Auth::id(), $depresiLevelNaiveBayes);
+
+            // Hapus data gejala dari session
+            session()->forget(array_keys($gejalaAnswers));
+
+            // Redirect ke halaman hasil diagnosa
             return redirect()->route('pasien.diagnosa.result');
         }
 
@@ -43,38 +81,32 @@ class DiagnosaController extends Controller
     
     public function showResult()
     {
-        $answers = session()->all();
+        $hasil_diagnosa = HasilDiagnosa::with('depresi')->where('user_id', Auth::id())->first();
+        return view('pasien.diagnosa.hasil', compact('hasil_diagnosa'));
+    }
 
-        // Filter hanya jawaban gejala
-        $gejalaAnswers = array_filter($answers, function($key) {
-            return strpos($key, 'gejala_') === 0;
-        }, ARRAY_FILTER_USE_KEY);
-
-        // Convert answers to sample format
-        $sample = $this->prepareSample($gejalaAnswers);
-        // Hitung tingkat depresi dengan Naive Bayes
+    public function calculateDepresi($sample)
+    {
         $depresiLevelNaiveBayes = $this->calculateDepresiLevelWithNaiveBayes($sample);
-        // Hitung tingkat depresi dengan KNN
         $depresiLevelKNN = $this->calculateDepresiLevelWithKNN($sample);
 
-        $hasil_diagnosa = HasilDiagnosa::with('depresi')->where('user_id', Auth::id())
-            ->first();
+        return compact('depresiLevelNaiveBayes', 'depresiLevelKNN');
+    }
 
-        //dd($hasil_diagnosa);
+    public function saveOrUpdateDiagnosa($userId, $depresiLevelNaiveBayes)
+    {
+        $hasil_diagnosa = HasilDiagnosa::with('depresi')->where('user_id', $userId)->first();
+
         if($hasil_diagnosa){
-            HasilDiagnosa::where('user_id', Auth::id())->update([
+            $hasil_diagnosa->update([
                 'depresi_id' => $depresiLevelNaiveBayes,
             ]);
         }else{
             HasilDiagnosa::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'depresi_id' => $depresiLevelNaiveBayes,
             ]);
         }
-
-        session()->forget(array_keys($gejalaAnswers));
-
-        return view('pasien.diagnosa.hasil', compact('depresiLevelNaiveBayes', 'depresiLevelKNN', 'hasil_diagnosa'));
     }
 
     private function calculateDepresiLevelWithNaiveBayes($sample)

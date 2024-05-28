@@ -90,7 +90,7 @@
                                                 @endphp
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio1_{{ $p->id }}" value="0" {{ $answer == '0' ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak Tahu</label>
+                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio2_{{ $p->id }}" value="1" {{ $answer == '1' ? 'checked' : '' }}>
@@ -153,7 +153,7 @@
                 const isAnswered = questionGroups[name].some((input) => input.checked);
                 if (!isAnswered) {
                     isValid = false;
-                    alert(`Please answer all questions before submitting.`);
+                    alert('Silakan jawab semua pertanyaan!');
                     break;
                 }
             }
@@ -170,20 +170,22 @@
             };
         };
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const paginationLinks = document.querySelectorAll('.pagination a');
 
             paginationLinks.forEach(link => {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault();
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Selalu prevent default untuk kontrol secara manual
 
-                    const form = document.getElementById('diagnosisForm');
-                    const action = link.getAttribute('href');
-                    const pageInput = document.getElementById('page');
-                    const urlParams = new URLSearchParams(new URL(action).search);
-                    const page = urlParams.get('page');
-                    pageInput.value = page;
-                    form.submit();
+                    if (validateForm()) {
+                        const form = document.getElementById('diagnosisForm');
+                        const action = link.getAttribute('href');
+                        const pageInput = document.getElementById('page');
+                        const urlParams = new URLSearchParams(new URL(action).search);
+                        const page = urlParams.get('page');
+                        pageInput.value = page;
+                        form.submit();
+                    }
                 });
             });
         });   
