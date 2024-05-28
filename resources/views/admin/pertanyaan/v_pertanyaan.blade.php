@@ -68,7 +68,8 @@
                   data: 'action', 
                   name: 'action', 
                   orderable: true, 
-                  searchable: true
+                  searchable: true,
+                  className: 'align-middle text-center'
               },
           ]
       });
