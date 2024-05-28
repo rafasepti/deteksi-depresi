@@ -90,7 +90,7 @@
                                                 @endphp
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio1_{{ $p->id }}" value="0" {{ $answer == '0' ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak</label>
+                                                    <label class="custom-control-label" for="customRadio1_{{ $p->id }}">Tidak Tahu</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gejala_{{ $index + $pertanyaan->firstItem() }}" id="customRadio2_{{ $p->id }}" value="1" {{ $answer == '1' ? 'checked' : '' }}>

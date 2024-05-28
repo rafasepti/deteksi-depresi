@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Depresi;
 use App\Models\Gejala;
 use App\Models\GejalaDepresi;
+use App\Models\HasilDiagnosa;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,16 +52,29 @@ class DiagnosaController extends Controller
 
         // Convert answers to sample format
         $sample = $this->prepareSample($gejalaAnswers);
-
-        //dd($sample);
-
         // Hitung tingkat depresi dengan Naive Bayes
         $depresiLevelNaiveBayes = $this->calculateDepresiLevelWithNaiveBayes($sample);
-
         // Hitung tingkat depresi dengan KNN
         $depresiLevelKNN = $this->calculateDepresiLevelWithKNN($sample);
 
-        return view('pasien.diagnosa.hasil', compact('depresiLevelNaiveBayes', 'depresiLevelKNN'));
+        $hasil_diagnosa = HasilDiagnosa::with('depresi')->where('user_id', Auth::id())
+            ->first();
+
+        //dd($hasil_diagnosa);
+        if($hasil_diagnosa){
+            HasilDiagnosa::where('user_id', Auth::id())->update([
+                'depresi_id' => $depresiLevelNaiveBayes,
+            ]);
+        }else{
+            HasilDiagnosa::create([
+                'user_id' => Auth::id(),
+                'depresi_id' => $depresiLevelNaiveBayes,
+            ]);
+        }
+
+        session()->forget(array_keys($gejalaAnswers));
+
+        return view('pasien.diagnosa.hasil', compact('depresiLevelNaiveBayes', 'depresiLevelKNN', 'hasil_diagnosa'));
     }
 
     private function calculateDepresiLevelWithNaiveBayes($sample)
@@ -130,26 +144,26 @@ class DiagnosaController extends Controller
         foreach ($gejalaDepresi as $item) {
             if ($item->depresi_id != $currentDepresiId) {
                 // Simpan label jika sudah pindah ke depresi_id yang berbeda
-                $labels[] = Depresi::find($currentDepresiId)->tingkat_depresi;
+                $labels[] = Depresi::find($currentDepresiId)->id;
                 $currentDepresiId = $item->depresi_id;
             }
         }
         // Add the last label
-        $labels[] = Depresi::find($currentDepresiId)->tingkat_depresi;
+        $labels[] = Depresi::find($currentDepresiId)->id;
 
         return $labels;
     }
 
     private function prepareSample($answers)
-{
-    $gejalaCount = Gejala::count();
-    $sample = array_fill(0, $gejalaCount, 0);
+    {
+        $gejalaCount = Gejala::count();
+        $sample = array_fill(0, $gejalaCount, 0);
 
-    foreach ($answers as $key => $value) {
-        $gejalaId = (int)str_replace('gejala_', '', $key) - 1; // Ubah indeks ke format numerik
-        $sample[$gejalaId] = (int)$value; // Ubah nilai ke format numerik
+        foreach ($answers as $key => $value) {
+            $gejalaId = (int)str_replace('gejala_', '', $key) - 1; // Ubah indeks ke format numerik
+            $sample[$gejalaId] = (int)$value; // Ubah nilai ke format numerik
+        }
+
+        return $sample;
     }
-
-    return $sample;
-}
 }

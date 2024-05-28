@@ -32,4 +32,9 @@ class Depresi extends Model
     {
         return $this->belongsToMany(Gejala::class, 'gejala_depresi', 'depresi_id', 'gejala_id')->withPivot('value');
     }
+
+    public function HasilDiagnosa()
+    {
+        return $this->hasOne(HasilDiagnosa::class, 'depresi_id');
+    }
 }

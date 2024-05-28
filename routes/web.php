@@ -4,14 +4,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepresiController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\GejalaController;
+use App\Http\Controllers\HomePasienController;
 use App\Http\Controllers\PertanyaanDiagnosaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pasien.index');
-})->name('index');
+Route::get('/', [HomePasienController::class, 'index'])->name('index');
 
 Route::middleware('auth', 'checkRole:admin')->group(function () {
     Route::get('/admin', function () {
