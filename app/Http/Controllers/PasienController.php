@@ -50,37 +50,20 @@ class PasienController extends Controller
         return view('admin.pasien.detail', compact('hasil_diagnosa', 'pasien'));
     }
 
-    public function report($bln)
+    public function filter(Request $request)
     {
-        $bulan = [
-            'januari' => 1,
-            'februari' => 2,
-            'maret' => 3,
-            'april' => 4,
-            'mei' => 5,
-            'juni' => 6,
-            'juli' => 7,
-            'agustus' => 8,
-            'september' => 9,
-            'oktober' => 10,
-            'november' => 11,
-            'desember' => 12
-        ];
-    
-        // Dapatkan angka bulan dari nama bulan
-        $monthNumber = $bulan[strtolower($bln)] ?? null;
-    
-        if ($monthNumber) {
-            $hasil_diagnosa = HasilDiagnosa::with('depresi')
-                ->with('user')
-                ->whereMonth('updated_at', $monthNumber)
-                ->get();
-        } else {
-            // Jika nama bulan tidak valid, kembalikan hasil kosong atau semua data
-            $hasil_diagnosa = HasilDiagnosa::with('depresi')
-                ->with('user')
-                ->get();
-        }
-        return view('admin.pasien.report', compact('hasil_diagnosa'));
+        $request->validate([
+            'tgl_awal' => 'required|date',
+            'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
+        ]);
+
+        $tgl_awal = $request->input('tgl_awal');
+        $tgl_akhir = $request->input('tgl_akhir');
+
+        $hasil_diagnosa = HasilDiagnosa::with('depresi', 'user')
+            ->whereBetween('updated_at', [$tgl_awal, $tgl_akhir])
+            ->get();
+
+        return view('admin.pasien.report', compact('hasil_diagnosa', 'tgl_awal', 'tgl_akhir'));
     }
 }

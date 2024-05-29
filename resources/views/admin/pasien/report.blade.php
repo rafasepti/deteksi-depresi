@@ -76,8 +76,15 @@
                 </div>
             </div>
         </nav>
+        
         <!-- End Navbar -->
         <div class="container-fluid py-4">
+            @php
+                use Carbon\Carbon;
+            @endphp
+
+            <p class="text-sm">Tanggal Awal: {{ Carbon::parse($tgl_awal)->format('d/m/Y') }}</p>
+            <p class="text-sm">Tanggal Akhir: {{ Carbon::parse($tgl_akhir)->format('d/m/Y') }}</p>
             <div class="row">
                 <div class="col-12">
                     <div class="card my-4">

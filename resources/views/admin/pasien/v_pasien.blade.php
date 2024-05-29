@@ -22,6 +22,7 @@
     </button>
   </div>
 @endif
+
 <div class="row">
     <div class="col-12">
       <div class="card my-4">
@@ -29,27 +30,8 @@
           <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
               <div class="d-flex justify-content-between align-items-center ps-3 pe-3">
                   <h6 class="text-white text-capitalize">Tabel Pasien</h6>
-                  <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                      Print
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'tidak') }}">Semua</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'januari') }}">Januari</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'februari') }}">Februari</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'maret') }}">Maret</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'april') }}">April</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'mei') }}">Mei</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'juni') }}">Juni</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'juli') }}">Juli</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'agustus') }}">Agustus</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'september') }}">September</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'oktober') }}">Oktober</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'november') }}">November</a></li>
-                      <li><a class="dropdown-item" href="{{ route('admin.pasien.report', 'desember') }}">Desember</a></li>
-                    </ul>
-                  </div>
-                  {{-- <a href="{{ route('admin.pasien.report') }}" class="btn btn-light">Print</a> --}}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-block btn-light mb-3" data-bs-toggle="modal" data-bs-target="#modal-default">Print</button>
               </div>
           </div>
         </div>
@@ -71,6 +53,34 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="modal-default-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-default-label">Filter Laporan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('admin.pasien.filter') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="input-group input-group-static my-3">
+                        <label for="tgl_awal">Tanggal Awal</label>
+                        <input type="date" class="form-control" id="tgl_awal" name="tgl_awal" required>
+                    </div>
+                    <div class="input-group input-group-static my-3">
+                        <label for="tgl_akhir">Tanggal Akhir</label>
+                        <input type="date" class="form-control" id="tgl_akhir" name="tgl_akhir" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn bg-gradient-primary">Print</button>
+                    <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
 @endsection

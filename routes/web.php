@@ -52,7 +52,7 @@ Route::middleware('auth', 'checkRole:admin')->group(function () {
     
     Route::get('/pasien', [PasienController::class, 'index'])->name('admin.pasien');
     Route::get('/pasien/list', [PasienController::class, 'dataTable'])->name('admin.pasien.list');
-    Route::get('/pasien/report/{bln}', [PasienController::class, 'report'])->name('admin.pasien.report');
+    Route::post('/pasien/filter', [PasienController::class, 'filter'])->name('admin.pasien.filter');
     Route::get('/pasien/detail/{id}', [PasienController::class, 'show'])->name('admin.pasien.show');
 });
 
