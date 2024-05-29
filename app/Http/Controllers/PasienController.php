@@ -41,10 +41,11 @@ class PasienController extends Controller
     }
 
 
-    public function show()
+    public function show($id)
     {
         $hasil_diagnosa = HasilDiagnosa::with('depresi')
                 ->with('user')
+                ->where('user_id', $id)
                 ->first();
         $pasien = Pasien::where('user_id', $hasil_diagnosa->user_id)->first();
         return view('admin.pasien.detail', compact('hasil_diagnosa', 'pasien'));
