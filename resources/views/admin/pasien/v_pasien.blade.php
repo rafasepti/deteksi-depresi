@@ -9,19 +9,32 @@
     </nav>
 @endsection
 @section('content')
-@if(session('success'))
-  <div class="alert alert-success alert-dismissible text-white fade show" role="alert">
-    <span class="alert-icon align-middle">
-      <span class="material-icons text-md">
-      thumb_up_off_alt
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible text-white fade show" role="alert">
+      <span class="alert-icon align-middle">
+        <span class="material-icons text-md">
+        thumb_up_off_alt
+        </span>
       </span>
-    </span>
-    <span class="alert-text">{{ session('success') }}</span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-@endif
+      <span class="alert-text">{{ session('success') }}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+
+  @if ($errors->any())
+      <div class="alert alert-danger alert-dismissible text-white fade show" role="alert">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  @endif
 
 <div class="row">
     <div class="col-12">

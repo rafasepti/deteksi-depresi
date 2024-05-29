@@ -62,8 +62,8 @@ class PasienController extends Controller
         $tgl_akhir = $request->input('tgl_akhir');
 
         $hasil_diagnosa = HasilDiagnosa::with('depresi', 'user')
-            ->whereBetween('updated_at', [$tgl_awal, $tgl_akhir])
-            ->get();
+        ->whereBetween('updated_at', [$tgl_awal, date('Y-m-d', strtotime($tgl_akhir . ' +1 day'))])
+        ->get();
 
         return view('admin.pasien.report', compact('hasil_diagnosa', 'tgl_awal', 'tgl_akhir'));
     }

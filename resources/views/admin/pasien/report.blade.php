@@ -107,6 +107,9 @@
                                             <th
                                                 class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Tingkat Depresi</th>
+                                            <th
+                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Tgl Diagnosa</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -121,6 +124,9 @@
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span class="text-xs font-weight-bold"> {{ $d->depresi->tingkat_depresi }} </span>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-xs font-weight-bold"> {{ Carbon::parse($d->updated_at)->format('d/m/Y') }} </span>
                                                 </td>
                                             </tr>
                                         @endforeach
