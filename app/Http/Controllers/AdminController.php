@@ -117,7 +117,7 @@ class AdminController extends Controller
         $user = User::where('id', $request->user_id)->update([
             'name' => $request->nama_admin,
             'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $request->pass,
+            'password' => $request->password ? Hash::make($request->password) : $request->password,
         ]);
 
         $admin = Admin::where('id', $request->admin_id)->update([
